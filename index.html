@@ -13,11 +13,16 @@
     <div id="body" align="center">
         <h1>Portobello Timer</h1>
         <h2>A Pomodoro timer for those who dislike tomatoes!</h2>
-        <h1 id="hOneTimer">25:00</h1>
-        
-        <button id="btnStart" onclick="btnStart_Click()" >Start</button>
-        <button id="btnPause" onclick="btnPause_Click()" >Pause</button>
-        <button id="btnBreak" onclick="btnBreak_Click()" >Break</button>
+
+        <div id="timer">
+            <span id="time">
+                25:00
+            </span>
+        </div>
+
+        <button id="btnStart">Start</button>
+        <button id="btnStop">Stop</button>
+        <button id="btnShortBreak">Short Break</button>
     </div>
 
     <script src="./script.js"></script>
