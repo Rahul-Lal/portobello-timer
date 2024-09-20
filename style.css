@@ -1,6 +1,27 @@
 body {
-    background-image: url("./mushroom-lake-wallpaper-preview.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: #f1f1f1;
-  }
+  background-image: url("./mushroom-lake-wallpaper-preview.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #f1f1f1;
+}
+
+h1 {
+  font-family: "Sofadi One", system-ui;
+  font-weight: 330;
+  font-style: normal;
+  font-size: 66px;
+}
+
+h2 {
+  font-family: "Sofadi One", system-ui;
+  font-weight: 330;
+  font-style: normal;
+  font-size: 33px;
+}
+
+#time {
+  font-family: "Sofadi One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 100px;
+}

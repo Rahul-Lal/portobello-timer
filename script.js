@@ -3,6 +3,7 @@ let btnStart = document.getElementById('btnStart');
 let btnStop = document.getElementById('btnStop');
 let btnShortBreak = document.getElementById('btnShortBreak');
 
+let beep = new Audio("emergency-alarm-with-reverb-29431.mp3");
 
 function startTimer(duration, display) {
     let timer = duration,
@@ -20,6 +21,7 @@ function startTimer(duration, display) {
       }
       if(timer == 0 ){
         alert("Times Up");
+        beep.play();
         console.log("Times Up");
       }
     }, 1000);
@@ -31,6 +33,7 @@ function startTimer(duration, display) {
       btnStart.disabled = false;
       btnStop.disabled = true;
       btnShortBreak.disabled = false;
+      beep.ended();
     });
   }
   
