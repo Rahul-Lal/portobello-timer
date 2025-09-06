@@ -1,62 +1,60 @@
 //Credit to source: https://jsfiddle.net/u7ahcdgn/2/
-let btnStart = document.getElementById('btnStart');
-let btnStop = document.getElementById('btnStop');
-let btnShortBreak = document.getElementById('btnShortBreak');
 
-let beep = new Audio("emergency-alarm-with-reverb-29431.mp3");
+const btnStart = document.getElementById('btnStart');
+const btnStop = document.getElementById('btnStop');
+const btnShortBreak = document.getElementById('btnShortBreak');
+const display = document.querySelector('#time');
+const statusMsg = document.querySelector('#status'); // optional, for messages
 
-function startTimer(duration, display) {
-    let timer = duration,
-      minutes, seconds;
-    let intervalId = setInterval(function() {
-      minutes = parseInt(timer / 60, 10)
-      seconds = parseInt(timer % 60, 10);
-  
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-      display.textContent = minutes + ":" + seconds;
-  
-      if (--timer < 0) {
-        timer = duration;
-      }
-      if(timer == 0 ){
-        alert("Times Up");
-        beep.play();
-        console.log("Times Up");
-      }
-    }, 1000);
-  
-    btnStop.addEventListener('click', function() {
+const beep = new Audio("emergency-alarm-with-reverb-29431.mp3");
+
+let intervalId = null;
+
+function startTimer(duration) {
+  let timer = duration;
+
+  clearInterval(intervalId); // clear old timers
+  intervalId = setInterval(() => {
+    const minutes = String(Math.floor(timer / 60)).padStart(2, '0');
+    const seconds = String(timer % 60).padStart(2, '0');
+
+    display.textContent = `${minutes}:${seconds}`;
+
+    if (timer <= 0) {
       clearInterval(intervalId);
-      console.log("Timer Stopped");
-      alert("Timer Stopped");
+      statusMsg.textContent = "⏰ Time’s up!";
+      beep.play();
       btnStart.disabled = false;
       btnStop.disabled = true;
       btnShortBreak.disabled = false;
-      beep.ended();
-    });
-  }
-  
-  window.onload = function() {
-    display = document.querySelector('#time');
-    btnStart.addEventListener('click', function() {
-      startTimer(1500, display);
-      console.log("Start Portobello");
-      alert("Start Portobello");
-      btnStart.disabled = true;
-      btnStop.disabled = false;
-      btnShortBreak.disabled = true;
+    }
+    timer--;
+  }, 1000);
+}
 
-    });
-  btnShortBreak.addEventListener('click', function() {
-    console.log("Short Break Start");
-    alert("Short Break Start");
-      startTimer(300, display);
-      
-      btnStart.disabled = true;
-      btnStop.disabled = false;
-      btnShortBreak.disabled = true;
-    });
-  
-  };
-  
+// Event listeners
+btnStart.addEventListener('click', () => {
+  startTimer(1500); // 25 minutes
+  statusMsg.textContent = "🍅 Focus session started";
+  btnStart.disabled = true;
+  btnStop.disabled = false;
+  btnShortBreak.disabled = true;
+});
+
+btnShortBreak.addEventListener('click', () => {
+  startTimer(300); // 5 minutes
+  statusMsg.textContent = "☕ Short break started";
+  btnStart.disabled = true;
+  btnStop.disabled = false;
+  btnShortBreak.disabled = true;
+});
+
+btnStop.addEventListener('click', () => {
+  clearInterval(intervalId);
+  beep.pause();
+  beep.currentTime = 0;
+  statusMsg.textContent = "⏹ Timer stopped";
+  btnStart.disabled = false;
+  btnStop.disabled = true;
+  btnShortBreak.disabled = false;
+});
