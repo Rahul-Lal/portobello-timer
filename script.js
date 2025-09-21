@@ -58,3 +58,18 @@ btnStop.addEventListener('click', () => {
   btnStop.disabled = true;
   btnShortBreak.disabled = false;
 });
+
+function updateTimerDisplay(minutes, seconds) {
+  // Update the timer element on the page
+  const timerElement = document.getElementById("timer");
+  timerElement.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+
+  // Also update the browser tab title
+  document.title = `${minutes}:${seconds < 10 ? "0" : ""}${seconds} - Portobello Timer`;
+
+  // Update the timer display
+  if (minutes === 0 && seconds === 0) {
+    document.title = "Portobello Timer";
+    clearInterval(timerInterval); // stop timer
+  }
+}
