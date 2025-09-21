@@ -1,75 +1,87 @@
-//Credit to source: https://jsfiddle.net/u7ahcdgn/2/
+// Initial time (25 minutes example, adjust to your app logic)
+let minutes = 25;
+let seconds = 0;
+let timerInterval;
 
-const btnStart = document.getElementById('btnStart');
-const btnStop = document.getElementById('btnStop');
-const btnShortBreak = document.getElementById('btnShortBreak');
-const display = document.querySelector('#time');
-const statusMsg = document.querySelector('#status'); // optional, for messages
+// Grab timer display element
+const timerElement = document.getElementById("timer");
+const alarmSound = new Audio("emergency-alarm-with-reverb-29431.mp3");
 
-const beep = new Audio("emergency-alarm-with-reverb-29431.mp3");
+// Function: Updates the UI + tab title
+function updateTimerDisplay(min, sec) {
+  const formattedTime = `${min}:${sec < 10 ? "0" : ""}${sec}`;
+  timerElement.textContent = formattedTime;
+  document.title = `${formattedTime} - Portobello Timer`;
+}
 
-let intervalId = null;
+// Function: Starts the timer
+function startTimer() {
+  // Prevent multiple intervals running at once
+  clearInterval(timerInterval);
 
-function startTimer(duration) {
-  let timer = duration;
-
-  clearInterval(intervalId); // clear old timers
-  intervalId = setInterval(() => {
-    const minutes = String(Math.floor(timer / 60)).padStart(2, '0');
-    const seconds = String(timer % 60).padStart(2, '0');
-
-    display.textContent = `${minutes}:${seconds}`;
-
-    if (timer <= 0) {
-      clearInterval(intervalId);
-      statusMsg.textContent = "⏰ Time’s up!";
-      beep.play();
-      btnStart.disabled = false;
-      btnStop.disabled = true;
-      btnShortBreak.disabled = false;
+  timerInterval = setInterval(() => {
+    // ✅ Check if timer has finished
+    if (minutes === 0 && seconds === 0) {
+      clearInterval(timerInterval);
+      document.title = "Portobello Timer"; // Reset tab title
+      alert("Time’s up!"); // Optional alarm or sound
+      return;
     }
-    timer--;
+
+    // Countdown logic
+    if (seconds === 0) {
+      minutes--;
+      seconds = 59;
+    } else {
+      seconds--;
+    }
+
+    // Update screen + tab
+    updateTimerDisplay(minutes, seconds);
   }, 1000);
 }
 
-// Event listeners
-btnStart.addEventListener('click', () => {
-  startTimer(1500); // 25 minutes
-  statusMsg.textContent = "🍅 Focus session started";
-  btnStart.disabled = true;
-  btnStop.disabled = false;
-  btnShortBreak.disabled = true;
-});
-
-btnShortBreak.addEventListener('click', () => {
-  startTimer(300); // 5 minutes
-  statusMsg.textContent = "☕ Short break started";
-  btnStart.disabled = true;
-  btnStop.disabled = false;
-  btnShortBreak.disabled = true;
-});
-
-btnStop.addEventListener('click', () => {
-  clearInterval(intervalId);
-  beep.pause();
-  beep.currentTime = 0;
-  statusMsg.textContent = "⏹ Timer stopped";
-  btnStart.disabled = false;
-  btnStop.disabled = true;
-  btnShortBreak.disabled = false;
-});
-
-function updateTimerDisplay(minutes, seconds) {
-  // Update the timer element on the page
-  const timerElement = document.getElementById("timer");
-  timerElement.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-
-  // Also update the browser tab title
-  document.title = `${minutes}:${seconds < 10 ? "0" : ""}${seconds} - Portobello Timer`;
-
+// Function: Reset the timer
+function resetTimer(startMinutes = 25) {
+  clearInterval(timerInterval);
+  minutes = startMinutes;
+  seconds = 0;
+  updateTimerDisplay(minutes, seconds);
+  document.title = "Portobello Timer";
 }
-  // Update the timer display
-  if (minutes === 0 && seconds === 0) {
-    document.title = "Portobello Timer";
-    clearInterval(timerInterval); // stop timer
-  }
+
+// Function: Starts the timer
+function startTimer() {
+  // Prevent multiple intervals running at once
+  clearInterval(timerInterval);
+
+  timerInterval = setInterval(() => {
+
+    if (minutes === 0 && seconds === 0) {
+      clearInterval(timerInterval);
+      document.title = "Portobello Timer"; // Reset tab title
+      alarmSound.play(); // Optional alarm or sound
+      return;
+    }
+
+    // Countdown logic
+    if (seconds === 0) {
+      minutes--;
+      seconds = 59;
+    } else {
+      seconds--;
+    }
+
+    // Update screen + tab
+    updateTimerDisplay(minutes, seconds);
+  }, 1000);
+}
+
+// Function: Reset the timer
+function resetTimer(startMinutes = 25) {
+  clearInterval(timerInterval);
+  minutes = startMinutes;
+  seconds = 0;
+  updateTimerDisplay(minutes, seconds);
+  document.title = "Portobello Timer";
+}
