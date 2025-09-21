@@ -1,4 +1,12 @@
 body {
+  margin: 0; /* removes default white margin */
+  padding: 0;
+  min-height: 100vh; /* at least full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
   background-image: url("./mushroom-lake-wallpaper-preview.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -19,9 +27,40 @@ h2 {
   font-size: 33px;
 }
 
-#time {
+#timer {
+  font-family: "Sofadi One", system-ui;
+  font-size: 8rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+button {
   font-family: "Sofadi One", system-ui;
   font-weight: 400;
   font-style: normal;
-  font-size: 100px;
+  font-size: 20px;
+  padding: 10px 20px;
+  margin: 10px;
+  border: 2px solid white;
+  border-radius: 5px;
+  background-color: transparent;
+  outline-color: white;
+  cursor: pointer;
+}
+
+#btnStart{
+  color: #4CAF50; /* Green */
+}
+
+#btnStop{
+  color: #f44336; /* Red */
+}
+
+#btnShortBreak{
+  color: #2196F3; /* Blue */
+}
+
+button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
