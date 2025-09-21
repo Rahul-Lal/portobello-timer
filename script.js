@@ -85,3 +85,7 @@ function resetTimer(startMinutes = 25) {
   updateTimerDisplay(minutes, seconds);
   document.title = "Portobello Timer";
 }
+
+function startShortBreak() {
+  resetTimer(5);
+}
