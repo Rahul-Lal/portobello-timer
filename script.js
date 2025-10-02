@@ -24,42 +24,6 @@ function startTimer() {
     if (minutes === 0 && seconds === 0) {
       clearInterval(timerInterval);
       document.title = "Portobello Timer"; // Reset tab title
-      alert("Time’s up!"); // Optional alarm or sound
-      return;
-    }
-
-    // Countdown logic
-    if (seconds === 0) {
-      minutes--;
-      seconds = 59;
-    } else {
-      seconds--;
-    }
-
-    // Update screen + tab
-    updateTimerDisplay(minutes, seconds);
-  }, 1000);
-}
-
-// Function: Reset the timer
-function resetTimer(startMinutes = 25) {
-  clearInterval(timerInterval);
-  minutes = startMinutes;
-  seconds = 0;
-  updateTimerDisplay(minutes, seconds);
-  document.title = "Portobello Timer";
-}
-
-// Function: Starts the timer
-function startTimer() {
-  // Prevent multiple intervals running at once
-  clearInterval(timerInterval);
-
-  timerInterval = setInterval(() => {
-
-    if (minutes === 0 && seconds === 0) {
-      clearInterval(timerInterval);
-      document.title = "Portobello Timer"; // Reset tab title
       alarmSound.play(); // Optional alarm or sound
       return;
     }
@@ -84,6 +48,8 @@ function resetTimer(startMinutes = 25) {
   seconds = 0;
   updateTimerDisplay(minutes, seconds);
   document.title = "Portobello Timer";
+  alarmSound.pause();
+  alarmSound.currentTime = 0;
 }
 
 function startShortBreak() {
